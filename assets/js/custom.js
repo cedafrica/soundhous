@@ -79,3 +79,33 @@ $(function () {
 
 });
 
+const slides = document.querySelectorAll(".banner-slide");
+let currentSlide = 0;
+
+function changeSlide() {
+  slides[currentSlide].classList.remove("active");
+  currentSlide = (currentSlide + 1) % slides.length;
+  slides[currentSlide].classList.add("active");
+}
+
+setInterval(changeSlide, 8500);
+// Parallax Zoom Out
+window.addEventListener("scroll", () => {
+  const section = document.querySelector(".premium-sound-section");
+  let offset = window.pageYOffset;
+  section.style.backgroundSize = 100 + offset / 20 + "%";
+});
+
+// Fade-in on scroll
+const elements = document.querySelectorAll(".fade-in");
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+    }
+  });
+});
+
+elements.forEach(el => observer.observe(el));
+

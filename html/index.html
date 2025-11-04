@@ -140,13 +140,13 @@
 
       <!-- Booking Form -->
       <div class="col-xl-7 mt-7 mt-xl-0" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
-        <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+    <div id="booking-container" style="width: 100%; overflow-y: hidden;">
   <iframe 
-    width="100%" 
-    height="1000px" 
-    src="https://erp-ced.zohobookings.com/portal-embed#/4682789000000053089" 
-    frameborder="0" 
-    allowfullscreen>
+    id="bookingFrame"
+    src="https://erp-ced.zohobookings.com/portal-embed#/4682789000000053089"
+    frameborder="0"
+    allowfullscreen
+    style="width:100%; border:0; overflow:hidden; display:block; height:900px;">
   </iframe>
 </div>
 
@@ -583,13 +583,13 @@
         </div>
 
         <div class="col-xl-8">
-  <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+  <div id="booking-container" style="width: 100%; overflow: hidden;">
   <iframe 
-    width="100%" 
-    height="1000px" 
-    src="https://erp-ced.zohobookings.com/portal-embed#/4682789000000053089" 
-    frameborder="0" 
-    allowfullscreen>
+    id="bookingFrame"
+    src="https://erp-ced.zohobookings.com/portal-embed#/4682789000000053089"
+    frameborder="0"
+    allowfullscreen
+    style="width:100%; border:0; overflow:hidden; display:block; height:900px;">
   </iframe>
 </div>
 
@@ -673,6 +673,36 @@
   <script src="../assets/js/custom.js"></script>
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  <script>
+  function resizeIframe() {
+    const iframe = document.getElementById('bookingFrame');
+    if (!iframe) return;
+
+    try {
+      const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+      const iframeHeight = iframeDocument.body.scrollHeight;
+
+      if (iframeHeight && iframeHeight > 0) {
+        const minHeight = 800;  // lowest it can shrink
+        const maxHeight = 1400; // highest it can grow
+        const newHeight = Math.min(Math.max(iframeHeight, minHeight), maxHeight);
+        iframe.style.height = newHeight + "px";
+      }
+    } catch (e) {
+      // If Zoho blocks access → safe default
+      iframe.style.height = "1100px";
+    }
+  }
+
+  const iframe = document.getElementById('bookingFrame');
+  iframe.onload = function () {
+    resizeIframe();
+    setTimeout(resizeIframe, 1200);
+    setTimeout(resizeIframe, 2500);
+  };
+
+  window.addEventListener('resize', resizeIframe);
+</script>
 </body>
 
 </html>

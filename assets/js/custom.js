@@ -123,16 +123,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
-// Smooth fading slideshow for spatial audio
 document.addEventListener('DOMContentLoaded', () => {
   const slides = document.querySelectorAll('.spatial-slide');
-  let current = 0;
 
-  setInterval(() => {
-    slides[current].classList.remove('active');
-    current = (current + 1) % slides.length;
-    slides[current].classList.add('active');
-  }, 8000); // Change slide every 5 seconds
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view'); // fade in
+      } 
+      // optional: remove fade when out of view
+      // else entry.target.classList.remove('in-view');
+    });
+  }, { threshold: 0.3 }); // 30% of slide in viewport triggers
+
+  slides.forEach(slide => observer.observe(slide));
 });
 
 // Auto-fading slides for High Definition Calls Section

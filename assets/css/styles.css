@@ -16915,6 +16915,9 @@ ul {
 .booking-section {
   background: #ffffff;
   position: relative;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
 }
 
 .section-badge {

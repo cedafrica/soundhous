@@ -109,3 +109,74 @@ const observer = new IntersectionObserver(entries => {
 
 elements.forEach(el => observer.observe(el));
 
+// Scroll Zoom Effect
+document.addEventListener('DOMContentLoaded', function () {
+  const bg = document.querySelector('.hero-bg');
+
+  window.addEventListener('scroll', function () {
+    const scrollPos = window.scrollY;
+    const zoomFactor = 0.0025; // Increase for more dramatic zoom
+    if (window.innerWidth >= 768) {
+      bg.style.transform = `scale(${1 + scrollPos * zoomFactor})`;
+    } else {
+      bg.style.transform = 'scale(1)';
+    }
+  });
+});
+// Smooth fading slideshow for spatial audio
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = document.querySelectorAll('.spatial-slide');
+  let current = 0;
+
+  setInterval(() => {
+    slides[current].classList.remove('active');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('active');
+  }, 8000); // Change slide every 5 seconds
+});
+
+// Auto-fading slides for High Definition Calls Section
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = document.querySelectorAll('.call-slide');
+  let current = 0;
+
+  setInterval(() => {
+    slides[current].classList.remove('active');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('active');
+  }, 8000); // change slide every 5 seconds
+});
+// Fade in text when scrolling
+document.addEventListener('DOMContentLoaded', () => {
+  const content = document.querySelector('.entertainment-content');
+
+  window.addEventListener('scroll', () => {
+    const sectionTop = content.getBoundingClientRect().top;
+    const triggerPoint = window.innerHeight * 0.8; // start fade when section is 80% in viewport
+
+    if (sectionTop < triggerPoint) {
+      content.classList.add('visible');
+    }
+  });
+});
+// Open and Close Specs Popup
+document.addEventListener('DOMContentLoaded', () => {
+  const specsBtn = document.querySelector('.specs-btn');
+  const specsPopup = document.querySelector('.specs-popup');
+  const closePopup = document.querySelector('.close-popup');
+
+  specsBtn.addEventListener('click', () => {
+    specsPopup.classList.add('active');
+  });
+
+  closePopup.addEventListener('click', () => {
+    specsPopup.classList.remove('active');
+  });
+
+  // Optional: close on clicking outside
+  window.addEventListener('click', (e) => {
+    if (e.target === specsPopup) {
+      specsPopup.classList.remove('active');
+    }
+  });
+});

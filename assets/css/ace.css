@@ -456,8 +456,8 @@
   color: #fff;
 }
 
-.background-video {
-  position: fixed;
+.background-videos {
+  position: absolute; /* changed from fixed */
   top: 50%;
   left: 50%;
   min-width: 100%;

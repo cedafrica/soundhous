@@ -216,7 +216,6 @@
   }
 }
 
-/* High Definition Calls Section */
 .high-def-calls-section {
   width: 100%;
   padding: 6rem 2rem;
@@ -226,29 +225,28 @@
 }
 
 .call-slider {
-  position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  gap: 3rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .call-slide {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3rem; /* Reduced gap for premium look */
+  gap: 3rem;
   opacity: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  transition: opacity 1.2s ease-in-out;
+  transform: translateY(50px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
   flex-wrap: wrap;
 }
 
-.call-slide.active {
+.call-slide.in-view {
   opacity: 1;
-  position: relative;
+  transform: translateY(0);
 }
 
 .call-image img {
@@ -286,6 +284,7 @@
     padding: 1rem 0;
   }
 }
+
 /* Sonos Ace Design Section */
 .sonos-design-section {
   width: 100%;

@@ -139,17 +139,22 @@ document.addEventListener('DOMContentLoaded', () => {
   slides.forEach(slide => observer.observe(slide));
 });
 
-// Auto-fading slides for High Definition Calls Section
 document.addEventListener('DOMContentLoaded', () => {
   const slides = document.querySelectorAll('.call-slide');
-  let current = 0;
 
-  setInterval(() => {
-    slides[current].classList.remove('active');
-    current = (current + 1) % slides.length;
-    slides[current].classList.add('active');
-  }, 8000); // change slide every 5 seconds
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view'); // fade in
+      } 
+      // optional: remove fade when out of view
+      // else entry.target.classList.remove('in-view');
+    });
+  }, { threshold: 0.3 });
+
+  slides.forEach(slide => observer.observe(slide));
 });
+
 // Fade in text when scrolling
 document.addEventListener('DOMContentLoaded', () => {
   const content = document.querySelector('.entertainment-content');

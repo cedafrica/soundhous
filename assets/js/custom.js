@@ -109,3 +109,83 @@ const observer = new IntersectionObserver(entries => {
 
 elements.forEach(el => observer.observe(el));
 
+// Scroll Zoom Effect
+document.addEventListener('DOMContentLoaded', function () {
+  const bg = document.querySelector('.hero-bg');
+
+  window.addEventListener('scroll', function () {
+    const scrollPos = window.scrollY;
+    const zoomFactor = 0.0025; // Increase for more dramatic zoom
+    if (window.innerWidth >= 768) {
+      bg.style.transform = `scale(${1 + scrollPos * zoomFactor})`;
+    } else {
+      bg.style.transform = 'scale(1)';
+    }
+  });
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = document.querySelectorAll('.spatial-slide');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view'); // fade in
+      } 
+      // optional: remove fade when out of view
+      // else entry.target.classList.remove('in-view');
+    });
+  }, { threshold: 0.3 }); // 30% of slide in viewport triggers
+
+  slides.forEach(slide => observer.observe(slide));
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = document.querySelectorAll('.call-slide');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view'); // fade in
+      } 
+      // optional: remove fade when out of view
+      // else entry.target.classList.remove('in-view');
+    });
+  }, { threshold: 0.3 });
+
+  slides.forEach(slide => observer.observe(slide));
+});
+
+// Fade in text when scrolling
+document.addEventListener('DOMContentLoaded', () => {
+  const content = document.querySelector('.entertainment-content');
+
+  window.addEventListener('scroll', () => {
+    const sectionTop = content.getBoundingClientRect().top;
+    const triggerPoint = window.innerHeight * 0.8; // start fade when section is 80% in viewport
+
+    if (sectionTop < triggerPoint) {
+      content.classList.add('visible');
+    }
+  });
+});
+// Open and Close Specs Popup
+document.addEventListener('DOMContentLoaded', () => {
+  const specsBtn = document.querySelector('.specs-btn');
+  const specsPopup = document.querySelector('.specs-popup');
+  const closePopup = document.querySelector('.close-popup');
+
+  specsBtn.addEventListener('click', () => {
+    specsPopup.classList.add('active');
+  });
+
+  closePopup.addEventListener('click', () => {
+    specsPopup.classList.remove('active');
+  });
+
+  // Optional: close on clicking outside
+  window.addEventListener('click', (e) => {
+    if (e.target === specsPopup) {
+      specsPopup.classList.remove('active');
+    }
+  });
+});

@@ -109,95 +109,102 @@ const observer = new IntersectionObserver(entries => {
 
 elements.forEach(el => observer.observe(el));
 
-document.addEventListener('DOMContentLoaded', () => {
-  // ===== Hero Scroll Zoom =====
+// Scroll Zoom Effect
+document.addEventListener('DOMContentLoaded', function () {
   const bg = document.querySelector('.hero-bg');
-  if (bg) {
-    let ticking = false;
-    const zoomFactor = 0.0025; // Adjust zoom intensity
 
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrollPos = window.scrollY;
-          if (window.innerWidth >= 768) {
-            bg.style.transform = `scale(${1 + scrollPos * zoomFactor})`;
-          } else {
-            bg.style.transform = 'scale(1)';
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
+  window.addEventListener('scroll', function () {
+    const scrollPos = window.scrollY;
+    const zoomFactor = 0.0025; // Increase for more dramatic zoom
+    if (window.innerWidth >= 768) {
+      bg.style.transform = `scale(${1 + scrollPos * zoomFactor})`;
+    } else {
+      bg.style.transform = 'scale(1)';
+    }
+  });
+});
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = document.querySelectorAll('.spatial-slide');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view'); // fade in
+      } 
+      // optional: remove fade when out of view
+      // else entry.target.classList.remove('in-view');
     });
-  }
+  }, { threshold: 0.3 }); // 30% of slide in viewport triggers
 
-  // ===== Spatial Audio Slides Fade-In =====
-  const spatialSlides = document.querySelectorAll('.spatial-slide');
-  if (spatialSlides.length > 0) {
-    const spatialObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-        }
-      });
-    }, { threshold: 0.3 });
+  slides.forEach(slide => observer.observe(slide));
+});
 
-    spatialSlides.forEach(slide => spatialObserver.observe(slide));
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = document.querySelectorAll('.call-slide');
 
-  // ===== High Definition Calls Slides Fade-In =====
-  const callSlides = document.querySelectorAll('.call-slide');
-  if (callSlides.length > 0) {
-    const callObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-        }
-      });
-    }, { threshold: 0.3 });
-
-    callSlides.forEach(slide => callObserver.observe(slide));
-  }
-
-  // ===== Entertainment Content Fade-In =====
-  const entertainmentContent = document.querySelector('.entertainment-content');
-  if (entertainmentContent) {
-    let tickingContent = false;
-
-    window.addEventListener('scroll', () => {
-      if (!tickingContent) {
-        window.requestAnimationFrame(() => {
-          const sectionTop = entertainmentContent.getBoundingClientRect().top;
-          const triggerPoint = window.innerHeight * 0.8;
-          if (sectionTop < triggerPoint) {
-            entertainmentContent.classList.add('visible');
-          }
-          tickingContent = false;
-        });
-        tickingContent = true;
-      }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view'); // fade in
+      } 
+      // optional: remove fade when out of view
+      // else entry.target.classList.remove('in-view');
     });
-  }
+  }, { threshold: 0.3 });
 
-  // ===== Specs Popup =====
+  slides.forEach(slide => observer.observe(slide));
+});
+
+// Fade in text when scrolling
+document.addEventListener('DOMContentLoaded', () => {
+  const content = document.querySelector('.entertainment-content');
+
+  window.addEventListener('scroll', () => {
+    const sectionTop = content.getBoundingClientRect().top;
+    const triggerPoint = window.innerHeight * 0.8; // start fade when section is 80% in viewport
+
+    if (sectionTop < triggerPoint) {
+      content.classList.add('visible');
+    }
+  });
+});
+// Open and Close Specs Popup
+document.addEventListener('DOMContentLoaded', () => {
   const specsBtn = document.querySelector('.specs-btn');
   const specsPopup = document.querySelector('.specs-popup');
   const closePopup = document.querySelector('.close-popup');
+  const bookBtn = document.querySelector('.book-btn');
 
-  if (specsBtn && specsPopup && closePopup) {
+  // Open Popup
+  if (specsBtn) {
     specsBtn.addEventListener('click', () => {
       specsPopup.classList.add('active');
     });
+  }
 
+  // Close Popup (X icon)
+  if (closePopup) {
     closePopup.addEventListener('click', () => {
       specsPopup.classList.remove('active');
     });
+  }
 
-    // Close popup if clicking outside
-    window.addEventListener('click', (e) => {
-      if (e.target === specsPopup) {
-        specsPopup.classList.remove('active');
+  // Close when clicking outside popup
+  window.addEventListener('click', (e) => {
+    if (e.target === specsPopup) {
+      specsPopup.classList.remove('active');
+    }
+  });
+
+  // Book a Listening Experience: Close popup + Smooth Scroll
+  if (bookBtn) {
+    bookBtn.addEventListener('click', (e) => {
+      e.preventDefault(); // Prevent default anchor jump
+      specsPopup.classList.remove('active'); // Close modal
+
+      const contactSection = document.querySelector('#contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
       }
     });
   }
